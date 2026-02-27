@@ -1,0 +1,24 @@
+{
+    "_bilgi": "YOLOv9 Detection pretrained weight linkleri.",
+
+    "yolov9t.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov9t.pt",
+        "aciklama": "YOLOv9 Tiny (en kucuk)"
+    },
+    "yolov9s.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov9s.pt",
+        "aciklama": "YOLOv9 Small"
+    },
+    "yolov9m.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov9m.pt",
+        "aciklama": "YOLOv9 Medium"
+    },
+    "yolov9c.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov9c.pt",
+        "aciklama": "YOLOv9 Compact"
+    },
+    "yolov9e.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov9e.pt",
+        "aciklama": "YOLOv9 Extended (en buyuk)"
+    }
+}

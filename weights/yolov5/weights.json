@@ -1,0 +1,24 @@
+{
+    "_bilgi": "YOLOv5u Detection pretrained weight linkleri (Ultralytics updated versiyon).",
+
+    "yolov5nu.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov5nu.pt",
+        "aciklama": "YOLOv5 Nano-u"
+    },
+    "yolov5su.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov5su.pt",
+        "aciklama": "YOLOv5 Small-u"
+    },
+    "yolov5mu.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov5mu.pt",
+        "aciklama": "YOLOv5 Medium-u"
+    },
+    "yolov5lu.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov5lu.pt",
+        "aciklama": "YOLOv5 Large-u"
+    },
+    "yolov5xu.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov5xu.pt",
+        "aciklama": "YOLOv5 XLarge-u (en buyuk)"
+    }
+}

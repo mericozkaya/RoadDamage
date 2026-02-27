@@ -1,0 +1,28 @@
+{
+    "_bilgi": "YOLOv10 Detection pretrained weight linkleri. Sadece detection destekler.",
+
+    "yolov10n.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov10n.pt",
+        "aciklama": "YOLOv10 Nano (en kucuk)"
+    },
+    "yolov10s.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov10s.pt",
+        "aciklama": "YOLOv10 Small"
+    },
+    "yolov10m.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov10m.pt",
+        "aciklama": "YOLOv10 Medium"
+    },
+    "yolov10b.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov10b.pt",
+        "aciklama": "YOLOv10 Base"
+    },
+    "yolov10l.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov10l.pt",
+        "aciklama": "YOLOv10 Large"
+    },
+    "yolov10x.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov10x.pt",
+        "aciklama": "YOLOv10 XLarge (en buyuk)"
+    }
+}

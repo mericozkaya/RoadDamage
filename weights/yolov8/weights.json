@@ -1,0 +1,25 @@
+{
+    "_bilgi": "YOLOv8 Detection pretrained weight linkleri.",
+    "_not": "Ultralytics otomatik indirir, manuel link gerekmez. Dosya yoksa Ultralytics kendi indirecek.",
+
+    "yolov8n.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8n.pt",
+        "aciklama": "YOLOv8 Nano (en kucuk, en hizli)"
+    },
+    "yolov8s.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8s.pt",
+        "aciklama": "YOLOv8 Small"
+    },
+    "yolov8m.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8m.pt",
+        "aciklama": "YOLOv8 Medium"
+    },
+    "yolov8l.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8l.pt",
+        "aciklama": "YOLOv8 Large"
+    },
+    "yolov8x.pt": {
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8x.pt",
+        "aciklama": "YOLOv8 XLarge (en buyuk)"
+    }
+}

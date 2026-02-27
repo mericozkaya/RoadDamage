@@ -1,49 +1,47 @@
 """
-RT-DETR Model Egitici
-========================
-Ultralytics RT-DETR modeli ile object detection egitimi.
-Baidu tarafindan gelistirilen Real-Time DEtection TRansformer.
-Desteklenen boyutlar: L, X
+YOLO11 Segmentation Model Egitici
+====================================
+Ultralytics YOLO11 modeli ile instance segmentation egitimi.
 """
 
-from ultralytics import RTDETR
+from ultralytics import YOLO
 from models.base import BaseTrainer
 from config import RUNS_DIR
 
 
-class RTDETRTrainer(BaseTrainer):
-    MODEL_NAME = "rtdetr"
-    DESCRIPTION = "Ultralytics RT-DETR Detection (L/X)"
-    DEFAULT_BATCH_SIZE = 16
+class YOLO11SegTrainer(BaseTrainer):
+    MODEL_NAME = "yolo11-seg"
+    DESCRIPTION = "Ultralytics YOLO11 Segmentation (n/s/m/l/x)"
+    DEFAULT_BATCH_SIZE = 48
 
     def setup_model(self, **kwargs):
-        """RT-DETR modelini yukler."""
-        weight = kwargs.get("weight", "rtdetr-l.pt")
+        """YOLO11 segmentation modelini yukler."""
+        weight = kwargs.get("weight", "yolo11s-seg.pt")
         weight_path = self.get_weight_path(weight)
-        self.model = RTDETR(weight_path)
+        self.model = YOLO(weight_path)
         print(f"[+] Model yuklendi: {weight_path}")
 
     def run_training(self, **kwargs):
-        """RT-DETR egitimini baslatir."""
+        """YOLO11 segmentation egitimini baslatir."""
         dataset_yaml = kwargs.get("dataset_yaml")
         if not dataset_yaml:
-            raise ValueError("RT-DETR egitimi icin 'dataset_yaml' parametresi gerekli (data.yaml yolu).")
+            raise ValueError("YOLO egitimi icin 'dataset_yaml' parametresi gerekli (data.yaml yolu).")
 
-        experiment_name = kwargs.get("experiment_name", "rtdetr_experiment")
+        experiment_name = kwargs.get("experiment_name", "yolo11seg_experiment")
 
         results = self.model.train(
             data=dataset_yaml,
             epochs=kwargs.get("epochs", self.DEFAULT_EPOCHS),
-            imgsz=kwargs.get("imgsz", 640),
+            imgsz=kwargs.get("imgsz", self.DEFAULT_IMAGE_SIZE),
             batch=kwargs.get("batch_size", self.DEFAULT_BATCH_SIZE),
             device=self.device,
             patience=kwargs.get("patience", 25),
-            optimizer=kwargs.get("optimizer", "AdamW"),
+            optimizer=kwargs.get("optimizer", "auto"),
             project=str(RUNS_DIR / self.MODEL_NAME),
             name=experiment_name,
             val=kwargs.get("val", True),
             plots=kwargs.get("plots", True),
-            workers=kwargs.get("workers", 4),
+            workers=kwargs.get("workers", 8),
         )
         return results
 
