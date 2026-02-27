@@ -1,0 +1,25 @@
+{
+    "_bilgi": "RF-DETR Object Detection pretrained weight linkleri. URL'leri kendin ekle.",
+    "_kullanim": "url alanina direkt indirme linkini yapistir (GitHub Release, HuggingFace, vs.)",
+
+    "rf-detr-nano.pth": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "RF-DETR Nano"
+    },
+    "rf-detr-small.pth": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "RF-DETR Small"
+    },
+    "rf-detr-base.pth": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "RF-DETR Base"
+    },
+    "rf-detr-large.pth": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "RF-DETR Large"
+    },
+    "rf-detr-large-2026.pth": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "RF-DETR Large (2026 versiyon)"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "_bilgi": "RF-DETR Segmentation pretrained weight linkleri. URL'leri kendin ekle.",
+    "_kullanim": "url alanina direkt indirme linkini yapistir (GitHub Release, HuggingFace, vs.)",
+
+    "rf-detr-seg-small.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "RF-DETR Segmentation Small"
+    }
+}

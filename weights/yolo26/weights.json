@@ -1,0 +1,46 @@
+{
+    "_bilgi": "YOLO26 pretrained weight linkleri. URL'leri kendin ekle.",
+    "_kullanim": "url alanina direkt indirme linkini yapistir (GitHub Release, HuggingFace, vs.)",
+
+    "yolo26n.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Nano - Detection (en kucuk, en hizli)"
+    },
+    "yolo26s.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Small - Detection"
+    },
+    "yolo26m.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Medium - Detection"
+    },
+    "yolo26l.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Large - Detection"
+    },
+    "yolo26x.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 XLarge - Detection (en buyuk, en yavaş)"
+    },
+
+    "yolo26n-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Nano - Segmentation"
+    },
+    "yolo26s-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Small - Segmentation"
+    },
+    "yolo26m-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Medium - Segmentation"
+    },
+    "yolo26l-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Large - Segmentation"
+    },
+    "yolo26x-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 XLarge - Segmentation"
+    }
+}
