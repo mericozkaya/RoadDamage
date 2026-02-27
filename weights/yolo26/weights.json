@@ -2,23 +2,23 @@
     "_bilgi": "YOLO26 Detection pretrained weight linkleri. URL'leri kendin ekle.",
 
     "yolo26n.pt": {
-        "url": "BURAYA_LINK_YAPISTIR",
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26n.pt",
         "aciklama": "YOLO26 Nano (en kucuk, en hizli)"
     },
     "yolo26s.pt": {
-        "url": "BURAYA_LINK_YAPISTIR",
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26s.pt",
         "aciklama": "YOLO26 Small"
     },
     "yolo26m.pt": {
-        "url": "BURAYA_LINK_YAPISTIR",
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26m.pt",
         "aciklama": "YOLO26 Medium"
     },
     "yolo26l.pt": {
-        "url": "BURAYA_LINK_YAPISTIR",
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26l.pt",
         "aciklama": "YOLO26 Large"
     },
     "yolo26x.pt": {
-        "url": "BURAYA_LINK_YAPISTIR",
+        "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26x.pt",
         "aciklama": "YOLO26 XLarge (en buyuk, en yavas)"
     }
 }
