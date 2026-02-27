@@ -26,12 +26,13 @@ from config import (
 # 1-2: en cok kullandiklarimiz, 3: digerleri acar
 POPULAR_FORMATS = [
     ("coco", "COCO JSON           (RF-DETR, Detectron2, vs.)"),
-    ("yolov8", "YOLOv8 PyTorch TXT   (YOLO26, YOLO11, YOLOv8, YOLOv5)"),
+    ("yolo26", "YOLO26 TXT          (YOLO26, YOLO11, vs.)"),
 ]
 
 ALL_FORMATS = [
     ("coco",                "COCO JSON"),
-    ("yolov8",              "YOLOv8 PyTorch TXT (YOLO26/11/8/5)"),
+    ("yolo26",              "YOLO26 TXT"),
+    ("yolov8",              "YOLOv8 TXT"),
     ("yolov5",              "YOLOv5 PyTorch TXT"),
     ("yolov7",              "YOLOv7 PyTorch TXT"),
     ("yolov9",              "YOLOv9 PyTorch TXT"),
