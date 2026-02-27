@@ -12,8 +12,7 @@ SEG-TEST-*/
 # Pretrained ve egitilmis model agirliklari (buyuk dosyalar)
 weights/**/*.pt
 weights/**/*.pth
-# Ama her modelin weights.json dosyasi TRACK edilir
-!weights/*/weights.json
+
 runs/
 
 # ======================== GİZLİ DOSYALAR ======================
