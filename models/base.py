@@ -10,6 +10,7 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from config import PROJECT_ROOT, RUNS_DIR, DATASETS_DIR, WEIGHTS_DIR
+from weight_manager import ensure_weight
 
 
 class BaseTrainer(ABC):
@@ -65,17 +66,9 @@ class BaseTrainer(ABC):
         return str(path)
 
     def get_weight_path(self, weight_name: str) -> str:
-        """Pretrained ağırlık dosyasının yolunu döndürür."""
-        # Önce weights/ klasörüne bak
-        path = WEIGHTS_DIR / weight_name
-        if path.exists():
-            return str(path)
-        # Geriye dönük uyumluluk: proje kök dizinine bak
-        old_path = PROJECT_ROOT / weight_name
-        if old_path.exists():
-            return str(old_path)
-        # Ağırlık dosyası bulunamadıysa, sadece adı döndür (otomatik indirilir)
-        return weight_name
+        """Pretrained agirlik dosyasinin yolunu dondurur.
+        Dosya yoksa weights.json'daki linkten otomatik indirir."""
+        return ensure_weight(self.MODEL_NAME, weight_name)
 
     @abstractmethod
     def setup_model(self, **kwargs):

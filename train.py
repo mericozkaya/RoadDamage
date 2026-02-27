@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from config import DATASETS_DIR, WEIGHTS_DIR
 from models import get_trainer, list_models, AVAILABLE_MODELS
+from weight_manager import list_weights_status, ensure_weight, get_available_weights, get_registry_weights
 
 
 # ================================================================
@@ -47,19 +48,25 @@ def scan_datasets():
     return datasets
 
 
-def scan_weights():
-    """weights/ klasöründeki tüm ağırlık dosyalarını bulur."""
+def scan_weights(model_name: str = None):
+    """Belirli bir modelin veya tum modellerin weight dosyalarini bulur."""
+    if model_name:
+        return get_available_weights(model_name)
+    # Tum modeller icin
     weights = []
     if not WEIGHTS_DIR.exists():
         return weights
-    for f in sorted(WEIGHTS_DIR.iterdir()):
-        if f.suffix in (".pt", ".pth"):
-            size_mb = f.stat().st_size / (1024 * 1024)
-            weights.append({
-                "name": f.name,
-                "path": str(f),
-                "size_mb": size_mb,
-            })
+    for d in sorted(WEIGHTS_DIR.iterdir()):
+        if d.is_dir():
+            for f in sorted(d.iterdir()):
+                if f.suffix in (".pt", ".pth"):
+                    size_mb = f.stat().st_size / (1024 * 1024)
+                    weights.append({
+                        "name": f.name,
+                        "path": str(f),
+                        "size_mb": size_mb,
+                        "model": d.name,
+                    })
     return weights
 
 
@@ -179,16 +186,24 @@ def interactive_menu():
             sys.exit(1)
         kwargs["dataset_yaml"] = str(yaml_path)
 
-        # Weight seçimi
+        # Weight secimi (weights/yolo26/ klasorunden)
         print(f"\n[3] ADIM 3: Pretrained Agirlik Sec")
-        weights = [w for w in scan_weights() if "yolo" in w["name"].lower()]
+        weights = get_registry_weights("yolo26")
         if weights:
-            w_items = [{"label": f"{w['name']:<30} ({w['size_mb']:.0f} MB)", **w} for w in weights]
-            selected_w = pick_from_list(w_items, "ağırlık")
+            w_items = []
+            for w in weights:
+                if w["exists"]:
+                    tag = f"({w['size_mb']:.0f} MB)"
+                elif w["has_url"]:
+                    tag = "(indirilebilir)"
+                else:
+                    tag = "(URL yok)"
+                w_items.append({"label": f"{w['name']:<30} {tag:<18} {w['aciklama']}", **w})
+            selected_w = pick_from_list(w_items, "agirlik")
             if selected_w:
                 kwargs["weight"] = selected_w["name"]
         else:
-            kwargs["weight"] = ask_str("Ağırlık dosyası adı", "yolo26s.pt")
+            kwargs["weight"] = ask_str("Agirlik dosyasi adi", "yolo26s.pt")
 
     elif model_name in ("rfdetr", "rfdetr-seg"):
         # RF-DETR: COCO formatında dizin lazım
@@ -317,9 +332,7 @@ def cli_mode():
         print("\nMevcut Datasetler:")
         for ds in scan_datasets():
             print(f"  - {ds['name']:<35} [{ds['format_str']}]")
-        print("\nMevcut Agirliklar:")
-        for w in scan_weights():
-            print(f"  - {w['name']:<30} ({w['size_mb']:.0f} MB)")
+        list_weights_status()
         sys.exit(0)
 
     # Model belirtilmediyse -> interaktif menüye yönlendir

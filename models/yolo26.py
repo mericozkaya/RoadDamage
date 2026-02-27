@@ -6,7 +6,7 @@ Ultralytics YOLO26 modeli ile object detection/segmentation egitimi.
 
 from ultralytics import YOLO
 from models.base import BaseTrainer
-from config import RUNS_DIR, WEIGHTS_DIR
+from config import RUNS_DIR
 
 
 class YOLO26Trainer(BaseTrainer):

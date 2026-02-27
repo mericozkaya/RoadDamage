@@ -1,0 +1,24 @@
+{
+    "_bilgi": "YOLO26 Segmentation pretrained weight linkleri. URL'leri kendin ekle.",
+
+    "yolo26n-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Nano - Segmentation"
+    },
+    "yolo26s-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Small - Segmentation"
+    },
+    "yolo26m-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Medium - Segmentation"
+    },
+    "yolo26l-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 Large - Segmentation"
+    },
+    "yolo26x-seg.pt": {
+        "url": "BURAYA_LINK_YAPISTIR",
+        "aciklama": "YOLO26 XLarge - Segmentation"
+    }
+}
