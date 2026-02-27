@@ -2,12 +2,12 @@
 Dataset Indirme Araci
 ======================
 Roboflow'dan dataset indirir. API anahtari .env dosyasindan okunur.
-Argumansin calistirirsan interaktif menu gelir.
+Projeler ve version'lar direkt API'den cekilir, elle yazmaya gerek yok.
 
 Kullanim:
     python download_dataset.py                          # Interaktif menu
-    python download_dataset.py --project seg-test-1     # Direkt indir
-    python download_dataset.py --all                    # Tumunu indir
+    python download_dataset.py --project quality-box    # Direkt indir
+    python download_dataset.py --list                   # Projeleri listele
 """
 
 import argparse
@@ -16,7 +16,6 @@ from roboflow import Roboflow
 from config import (
     ROBOFLOW_API_KEY,
     ROBOFLOW_WORKSPACE,
-    ROBOFLOW_PROJECTS,
     DATASETS_DIR,
 )
 

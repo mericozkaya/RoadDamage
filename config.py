@@ -37,30 +37,6 @@ RUNS_DIR.mkdir(exist_ok=True)
 # ============================================================
 ROBOFLOW_WORKSPACE = "road-asphalt-damage-classifier-qdyy0"
 
-ROBOFLOW_PROJECTS = {
-    # =================== QUALITY (yeni, kaliteli goruntuler) ===================
-    "quality-box": {
-        "project_name": "quality-box",
-        "version": 1,
-        "formats": ["coco", "yolo26", "yolov8", "yolov5", "darknet"],
-        "description": "Quality - Object Detection (2749 gorsel, 3 sinif)",
-    },
-
-    # =================== OLD (eski test datasetleri) ===========================
-    "seg-test-1": {
-        "project_name": "seg-test-1",
-        "version": 1,
-        "formats": ["coco", "yolo26", "yolov8", "yolov5", "darknet"],
-        "description": "[OLD] Segmentation dataset",
-    },
-    "box-test-1": {
-        "project_name": "box-test-1",
-        "version": 3,
-        "formats": ["coco", "yolo26", "yolov8", "yolov5", "darknet"],
-        "description": "[OLD] Object detection dataset",
-    },
-}
-
 # ============================================================
 # SINIF BİLGİLERİ
 # ============================================================
