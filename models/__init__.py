@@ -8,8 +8,18 @@ Yeni model eklemek için:
   3. AVAILABLE_MODELS sözlüğüne ekle
 """
 
+# --- YOLO Ailesi (Ultralytics) ---
 from models.yolo26 import YOLO26Trainer
 from models.yolo26_seg import YOLO26SegTrainer
+from models.yolo11 import YOLO11Trainer
+from models.yolo11_seg import YOLO11SegTrainer
+from models.yolov10 import YOLOv10Trainer
+from models.yolov9 import YOLOv9Trainer
+from models.yolov8 import YOLOv8Trainer
+from models.yolov8_seg import YOLOv8SegTrainer
+from models.yolov5 import YOLOv5Trainer
+
+# --- DETR Ailesi ---
 from models.rfdetr import RFDETRTrainer
 from models.rfdetr_seg import RFDETRSegTrainer
 from models.rtdetr import RTDETRTrainer
@@ -19,11 +29,20 @@ from models.rtdetr import RTDETRTrainer
 # Yeni model eklerken buraya da eklemeyi unutma.
 # ============================================================
 AVAILABLE_MODELS = {
-    "yolo26": YOLO26Trainer,
-    "yolo26-seg": YOLO26SegTrainer,
-    "rfdetr": RFDETRTrainer,
-    "rfdetr-seg": RFDETRSegTrainer,
-    "rtdetr": RTDETRTrainer,
+    # ---------- YOLO Ailesi (yeniden eskiye) ----------
+    "yolo26":       YOLO26Trainer,
+    "yolo26-seg":   YOLO26SegTrainer,
+    "yolo11":       YOLO11Trainer,
+    "yolo11-seg":   YOLO11SegTrainer,
+    "yolov10":      YOLOv10Trainer,
+    "yolov9":       YOLOv9Trainer,
+    "yolov8":       YOLOv8Trainer,
+    "yolov8-seg":   YOLOv8SegTrainer,
+    "yolov5":       YOLOv5Trainer,
+    # ---------- DETR Ailesi ----------
+    "rfdetr":       RFDETRTrainer,
+    "rfdetr-seg":   RFDETRSegTrainer,
+    "rtdetr":       RTDETRTrainer,
 }
 
 

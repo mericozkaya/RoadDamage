@@ -19,6 +19,22 @@ from config import DATASETS_DIR, WEIGHTS_DIR
 from models import get_trainer, list_models, AVAILABLE_MODELS
 from weight_manager import list_weights_status, ensure_weight, get_available_weights, get_registry_weights
 
+# Ultralytics YOLO ailesi (data.yaml + weight secimi)
+YOLO_FAMILY = {
+    "yolo26", "yolo26-seg",
+    "yolo11", "yolo11-seg",
+    "yolov10",
+    "yolov9",
+    "yolov8", "yolov8-seg",
+    "yolov5",
+}
+
+# Ultralytics RT-DETR (data.yaml + weight secimi, farkli parametreler)
+ULTRALYTICS_DETR = {"rtdetr"}
+
+# RF-DETR (kendi API'si, COCO format, boyut secimi)
+RFDETR_FAMILY = {"rfdetr", "rfdetr-seg"}
+
 
 # ================================================================
 # YARDIMCI FONKSİYONLAR
@@ -178,11 +194,11 @@ def interactive_menu():
     # ---- ADIM 3: Model-spesifik ayarlar ----
     kwargs = {}
 
-    if model_name in ("yolo26", "yolo26-seg"):
-        # YOLO: data.yaml lazim
+    if model_name in YOLO_FAMILY or model_name in ULTRALYTICS_DETR:
+        # Tum Ultralytics modelleri: data.yaml lazim
         yaml_path = Path(selected_ds["path"]) / "data.yaml"
         if not yaml_path.exists():
-            print(f"  [X] {yaml_path} bulunamadi. YOLO icin YOLO formatinda dataset gerekli.")
+            print(f"  [X] {yaml_path} bulunamadi. Bu model icin YOLO/TXT formatinda dataset gerekli.")
             sys.exit(1)
         kwargs["dataset_yaml"] = str(yaml_path)
 
@@ -203,17 +219,17 @@ def interactive_menu():
             if selected_w:
                 kwargs["weight"] = selected_w["name"]
         else:
-            default_w = "yolo26s-seg.pt" if model_name == "yolo26-seg" else "yolo26s.pt"
-            kwargs["weight"] = ask_str("Agirlik dosyasi adi", default_w)
+            print(f"  [!] {model_name} icin weights.json bulunamadi.")
+            kwargs["weight"] = ask_str("Agirlik dosyasi adi", "")
 
-    elif model_name in ("rfdetr", "rfdetr-seg"):
-        # RF-DETR: COCO formatında dizin lazım
+    elif model_name in RFDETR_FAMILY:
+        # RF-DETR: COCO formatinda dizin lazim
         coco_check = Path(selected_ds["path"]) / "train" / "_annotations.coco.json"
         if not coco_check.exists():
             print(f"  [!] Uyari: Bu dataset COCO formatinda olmayabilir.")
         kwargs["dataset_dir"] = selected_ds["path"]
 
-        # Boyut seçimi
+        # Boyut secimi
         if model_name == "rfdetr":
             sizes = ["nano", "small", "base", "large"]
         else:
@@ -228,24 +244,30 @@ def interactive_menu():
             kwargs["size"] = sizes[0]
             print(f"\n  Model boyutu: {sizes[0].upper()} (tek secenek)")
 
-    # ---- ADIM 4: Eğitim Parametreleri ----
+    # ---- ADIM 4: Egitim Parametreleri ----
     print(f"\n[4] ADIM 4: Egitim Parametreleri")
-    kwargs["epochs"] = ask_int("Epoch sayısı", 100)
+    kwargs["epochs"] = ask_int("Epoch sayisi", 100)
     
     default_bs = AVAILABLE_MODELS[model_name].DEFAULT_BATCH_SIZE
     kwargs["batch_size"] = ask_int("Batch size", default_bs)
     kwargs["patience"] = ask_int("Early stopping patience", 25)
     kwargs["workers"] = ask_int("Num workers", 4)
 
-    if model_name in ("yolo26", "yolo26-seg"):
+    if model_name in YOLO_FAMILY:
         kwargs["imgsz"] = ask_int("Goruntu boyutu (imgsz)", 640)
-        kwargs["optimizer"] = ask_str("Optimizer", "MuSGD")
+        # YOLO26 icin MuSGD, diger YOLO'lar icin auto
+        default_opt = "MuSGD" if model_name.startswith("yolo26") else "auto"
+        kwargs["optimizer"] = ask_str("Optimizer", default_opt)
+
+    elif model_name in ULTRALYTICS_DETR:
+        kwargs["imgsz"] = ask_int("Goruntu boyutu (imgsz)", 640)
+        kwargs["optimizer"] = ask_str("Optimizer", "AdamW")
     
-    elif model_name in ("rfdetr", "rfdetr-seg"):
+    elif model_name in RFDETR_FAMILY:
         kwargs["grad_accum_steps"] = ask_int("Gradient accumulation steps", 4)
         if model_name == "rfdetr":
             kwargs["resolution"] = ask_int("Resolution", 640)
-            kwargs["multi_scale"] = ask_yes_no("Multi-scale eğitim?", True)
+            kwargs["multi_scale"] = ask_yes_no("Multi-scale egitim?", True)
             kwargs["amp"] = ask_yes_no("AMP (Mixed Precision)?", True)
             kwargs["lr"] = ask_float("Learning rate", 0.0001)
             kwargs["warmup_epochs"] = ask_float("Warmup epoch", 3.0)
@@ -290,16 +312,20 @@ def cli_mode():
         description="RoadDamage - Model Egitim Araci",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Örnekler:
-  python train.py                                                 # İnteraktif menü
+Ornekler:
+  python train.py                                                 # Interaktif menu
   python train.py --model yolo26 --dataset-yaml datasets/X/data.yaml --epochs 100
+  python train.py --model yolov8 --dataset-yaml datasets/X/data.yaml --weight yolov8s.pt
+  python train.py --model yolo11 --dataset-yaml datasets/X/data.yaml
+  python train.py --model yolov5 --dataset-yaml datasets/X/data.yaml
+  python train.py --model rtdetr --dataset-yaml datasets/X/data.yaml --weight rtdetr-l.pt
   python train.py --model rfdetr --size nano --dataset-dir datasets/BOX-TEST-1-3
   python train.py --model rfdetr-seg --size small --dataset-dir datasets/SEG-TEST-1-1
   python train.py --list                                          # Modelleri listele
         """,
     )
 
-    parser.add_argument("--model", type=str, help="Model adi (yolo26, yolo26-seg, rfdetr, rfdetr-seg, rtdetr)")
+    parser.add_argument("--model", type=str, help="Model adi (yolo26, yolo11, yolov10, yolov9, yolov8, yolov5, rfdetr, rtdetr, vs.)")
     parser.add_argument("--list", action="store_true", help="Mevcut modelleri listele")
 
     # Ortak
@@ -356,7 +382,7 @@ def cli_mode():
     if args.experiment:
         kwargs["experiment_name"] = args.experiment
 
-    if args.model in ("yolo26", "yolo26-seg"):
+    if args.model in YOLO_FAMILY or args.model in ULTRALYTICS_DETR:
         if args.weight:
             kwargs["weight"] = args.weight
         if args.dataset_yaml:
@@ -364,7 +390,7 @@ def cli_mode():
         kwargs["imgsz"] = args.imgsz
         kwargs["optimizer"] = args.optimizer
 
-    elif args.model in ("rfdetr", "rfdetr-seg"):
+    elif args.model in RFDETR_FAMILY:
         if args.size:
             kwargs["size"] = args.size
         if args.dataset_dir:

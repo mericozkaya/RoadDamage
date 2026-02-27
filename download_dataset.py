@@ -25,8 +25,11 @@ from config import (
 # ================================================================
 # 1-2: en cok kullandiklarimiz, 3: digerleri acar
 POPULAR_FORMATS = [
-    ("coco", "COCO JSON           (RF-DETR, Detectron2, vs.)"),
-    ("yolo26", "YOLO26 TXT          (YOLO26, YOLO11, vs.)"),
+    ("coco",   "COCO JSON           (RF-DETR, Detectron2, vs.)"),
+    ("yolo26", "YOLO26 TXT          (YOLO26)"),
+    ("yolov8", "YOLOv8 TXT          (YOLO11, YOLOv10, YOLOv9, YOLOv8)"),
+    ("yolov5", "YOLOv5 TXT          (YOLOv5)"),
+    ("darknet","Darknet TXT          (YOLOv4 / Darknet)"),
 ]
 
 ALL_FORMATS = [
