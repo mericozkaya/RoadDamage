@@ -9,6 +9,7 @@ Yeni model eklemek için:
 """
 
 from models.yolo26 import YOLO26Trainer
+from models.yolo26_seg import YOLO26SegTrainer
 from models.rfdetr import RFDETRTrainer
 from models.rfdetr_seg import RFDETRSegTrainer
 from models.rtdetr import RTDETRTrainer
@@ -19,6 +20,7 @@ from models.rtdetr import RTDETRTrainer
 # ============================================================
 AVAILABLE_MODELS = {
     "yolo26": YOLO26Trainer,
+    "yolo26-seg": YOLO26SegTrainer,
     "rfdetr": RFDETRTrainer,
     "rfdetr-seg": RFDETRSegTrainer,
     "rtdetr": RTDETRTrainer,

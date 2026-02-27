@@ -1,7 +1,7 @@
 """
-YOLO26 Model Egitici
-====================
-Ultralytics YOLO26 modeli ile object detection/segmentation egitimi.
+YOLO26 Segmentation Model Egitici
+===================================
+Ultralytics YOLO26 modeli ile instance segmentation egitimi.
 """
 
 from ultralytics import YOLO
@@ -9,25 +9,25 @@ from models.base import BaseTrainer
 from config import RUNS_DIR
 
 
-class YOLO26Trainer(BaseTrainer):
-    MODEL_NAME = "yolo26"
-    DESCRIPTION = "Ultralytics YOLO26 Detection (n/s/m/l/x)"
+class YOLO26SegTrainer(BaseTrainer):
+    MODEL_NAME = "yolo26-seg"
+    DESCRIPTION = "Ultralytics YOLO26 Segmentation (n/s/m/l/x)"
     DEFAULT_BATCH_SIZE = 48
 
     def setup_model(self, **kwargs):
-        """YOLO modelini yukler."""
-        weight = kwargs.get("weight", "yolo26s.pt")
+        """YOLO segmentation modelini yukler."""
+        weight = kwargs.get("weight", "yolo26s-seg.pt")
         weight_path = self.get_weight_path(weight)
         self.model = YOLO(weight_path)
         print(f"[+] Model yuklendi: {weight_path}")
 
     def run_training(self, **kwargs):
-        """YOLO egitimini baslatir."""
+        """YOLO segmentation egitimini baslatir."""
         dataset_yaml = kwargs.get("dataset_yaml")
         if not dataset_yaml:
             raise ValueError("YOLO egitimi icin 'dataset_yaml' parametresi gerekli (data.yaml yolu).")
 
-        experiment_name = kwargs.get("experiment_name", "yolo26_experiment")
+        experiment_name = kwargs.get("experiment_name", "yolo26seg_experiment")
 
         results = self.model.train(
             data=dataset_yaml,
@@ -46,31 +46,13 @@ class YOLO26Trainer(BaseTrainer):
         return results
 
     def validate(self, **kwargs):
-        """YOLO doğrulama."""
+        """YOLO dogrulama."""
         if self.model is None:
-            raise RuntimeError("Önce model yüklenmeli (setup_model).")
+            raise RuntimeError("Once model yuklenmeli (setup_model).")
         return self.model.val()
 
     def predict(self, source, **kwargs):
         """YOLO tahmin."""
         if self.model is None:
-            raise RuntimeError("Önce model yüklenmeli (setup_model).")
+            raise RuntimeError("Once model yuklenmeli (setup_model).")
         return self.model.predict(source=source, **kwargs)
-
-
-# =============================================================
-# Doğrudan çalıştırma desteği: python -m models.yolo26
-# =============================================================
-if __name__ == "__main__":
-    trainer = YOLO26Trainer()
-    trainer.train(
-        weight="yolo26s.pt",
-        dataset_yaml=r"C:\projects\RoadDamage\datasets\BOX-TEST-1-3\data.yaml",
-        epochs=100,
-        imgsz=640,
-        batch_size=48,
-        patience=25,
-        optimizer="MuSGD",
-        experiment_name="YOLO26x_Asfalt_BOXTEST",
-        workers=8,
-    )

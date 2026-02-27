@@ -178,17 +178,17 @@ def interactive_menu():
     # ---- ADIM 3: Model-spesifik ayarlar ----
     kwargs = {}
 
-    if model_name == "yolo26":
-        # YOLO: data.yaml lazım
+    if model_name in ("yolo26", "yolo26-seg"):
+        # YOLO: data.yaml lazim
         yaml_path = Path(selected_ds["path"]) / "data.yaml"
         if not yaml_path.exists():
             print(f"  [X] {yaml_path} bulunamadi. YOLO icin YOLO formatinda dataset gerekli.")
             sys.exit(1)
         kwargs["dataset_yaml"] = str(yaml_path)
 
-        # Weight secimi (weights/yolo26/ klasorunden)
+        # Weight secimi (weights/{model_name}/ klasorunden)
         print(f"\n[3] ADIM 3: Pretrained Agirlik Sec")
-        weights = get_registry_weights("yolo26")
+        weights = get_registry_weights(model_name)
         if weights:
             w_items = []
             for w in weights:
@@ -203,7 +203,8 @@ def interactive_menu():
             if selected_w:
                 kwargs["weight"] = selected_w["name"]
         else:
-            kwargs["weight"] = ask_str("Agirlik dosyasi adi", "yolo26s.pt")
+            default_w = "yolo26s-seg.pt" if model_name == "yolo26-seg" else "yolo26s.pt"
+            kwargs["weight"] = ask_str("Agirlik dosyasi adi", default_w)
 
     elif model_name in ("rfdetr", "rfdetr-seg"):
         # RF-DETR: COCO formatında dizin lazım
@@ -236,8 +237,8 @@ def interactive_menu():
     kwargs["patience"] = ask_int("Early stopping patience", 25)
     kwargs["workers"] = ask_int("Num workers", 4)
 
-    if model_name == "yolo26":
-        kwargs["imgsz"] = ask_int("Görüntü boyutu (imgsz)", 640)
+    if model_name in ("yolo26", "yolo26-seg"):
+        kwargs["imgsz"] = ask_int("Goruntu boyutu (imgsz)", 640)
         kwargs["optimizer"] = ask_str("Optimizer", "MuSGD")
     
     elif model_name in ("rfdetr", "rfdetr-seg"):
@@ -298,7 +299,7 @@ def cli_mode():
         """,
     )
 
-    parser.add_argument("--model", type=str, help="Model adı (yolo26, rfdetr, rfdetr-seg, rtdetr)")
+    parser.add_argument("--model", type=str, help="Model adi (yolo26, yolo26-seg, rfdetr, rfdetr-seg, rtdetr)")
     parser.add_argument("--list", action="store_true", help="Mevcut modelleri listele")
 
     # Ortak
@@ -355,7 +356,7 @@ def cli_mode():
     if args.experiment:
         kwargs["experiment_name"] = args.experiment
 
-    if args.model == "yolo26":
+    if args.model in ("yolo26", "yolo26-seg"):
         if args.weight:
             kwargs["weight"] = args.weight
         if args.dataset_yaml:
